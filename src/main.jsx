@@ -9,11 +9,15 @@ import Home from './Components/Home/Home.jsx';
 import AllProducts from './Components/AllProducts/AllProducts.jsx';
 import AuthProvider from './Context/AuthProvider.jsx';
 import Register from './Components/Register/Register.jsx';
+import MyProducts from './Components/MyProducts/MyProducts.jsx';
+import MyBids from './Components/MyBids/MyBids.jsx';
+import ProductDetails from './Components/ProductDetails/ProductDetails.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component:RootLayout,
+    hydrateFallbackElement: <h2>loading....</h2>,
     children: [
       {
         index: true,
@@ -27,6 +31,19 @@ const router = createBrowserRouter([
         path: 'register',
         Component: Register
       },
+      {
+        path: 'myproducts',
+        element: <MyProducts></MyProducts>
+      },
+      {
+        path: 'mybids',
+        element: <MyBids></MyBids>
+      },
+      {
+        path: 'productDetails/:id',
+        loader: ({params})=> fetch(`http://localhost:3000/products/${params.id}`),
+        Component: ProductDetails
+      }
     ]
   },
 ]);
